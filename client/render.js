@@ -1,10 +1,10 @@
-
-
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext('2d');
+import {updateDirection} from './connection';
 
-export function processGameUpdate(update) {
-    console.log(update)
+export function processGameUpdate(res) {
+   console.log(res)
+   update();
 }
 
 
@@ -52,7 +52,7 @@ document.addEventListener('keydown', event => {
         block.dy = block.speed;
         block.dx = 0;
     }
-    update();
+    //update();
 
 
 });
@@ -101,4 +101,5 @@ function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     moveBlock();
     drawBlock();
+    //updateDirection({x: block.x, y: block.y});
 }

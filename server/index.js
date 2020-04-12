@@ -27,6 +27,7 @@ const io = socketio(server);
 io.on('connection', socket => {
   console.log('Player connected!', socket.id);
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
+  socket.on(Constants.MSG_TYPES.INPUT, onUpdate);
   socket.on('disconnect', onDisconnect);
 });
 
@@ -38,4 +39,8 @@ function joinGame(username) {
 
 function onDisconnect() {
   game.removePlayer(this);
+}
+
+function onUpdate(obj) {
+  console.log(obj)
 }
