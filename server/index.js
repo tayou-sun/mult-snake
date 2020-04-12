@@ -4,6 +4,7 @@ const express = require("express")
 const Constants = require('../shared/constraints');
 const app = express()
 const Game = require('./game');
+
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const socketio = require('socket.io');
@@ -42,5 +43,5 @@ function onDisconnect() {
 }
 
 function onUpdate(obj) {
-  console.log(obj)
+  game.input(obj);
 }

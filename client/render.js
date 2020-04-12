@@ -3,8 +3,13 @@ var ctx = canvas.getContext('2d');
 import {updateDirection} from './connection';
 
 export function processGameUpdate(res) {
+    ctx.restore();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
    console.log(res)
-   update();
+   res.forEach(element => {
+    update(element.x, element.y);
+   });
+  
 }
 
 
@@ -52,6 +57,11 @@ document.addEventListener('keydown', event => {
         block.dy = block.speed;
         block.dx = 0;
     }
+
+    var x = block.x + block.dx;
+    var y = block.y + block.dy;
+    
+    updateDirection({x: x, y: y});
     //update();
 
 
@@ -73,9 +83,9 @@ document.addEventListener('keyup', event => {
 });
 
 
-function moveBlock() {
-    block.x += block.dx;
-    block.y += block.dy;
+function moveBlock(x,y) {
+    block.x  = x;
+    block.y = y;
 
     if (block.x < 0) {
         block.x = 0
@@ -96,10 +106,8 @@ function moveBlock() {
 }
 
 
-function update() {
-    ctx.restore();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    moveBlock();
+function update(x, y) {
+    moveBlock(x, y);
     drawBlock();
     //updateDirection({x: block.x, y: block.y});
 }
