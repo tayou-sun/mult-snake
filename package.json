@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development nodemon server/server.js",
     "develop": "cross-env NODE_ENV=development nodemon server/index.js",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "shainurova e.",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "nodemon": "^2.0.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "socket.io": "^2.3.0",
     "throttle-debounce": "^2.1.0"
   },
