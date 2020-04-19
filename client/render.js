@@ -5,13 +5,16 @@ import {updateDirection} from './connection';
 export function processGameUpdate(res) {
     ctx.restore();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-   console.log(res)
-   res.forEach(element => {
+    console.log(res)
+    res.players.forEach(element => {
     update(element.x, element.y);
    });
+
+   res.items.forEach(item=>{
+    drawItems(item.x, item.y)
+   })
   
 }
-
 
 export function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -105,6 +108,13 @@ function moveBlock(x,y) {
 
 }
 
+function drawItems(x,y){
+    ctx.beginPath();
+    ctx.rect(x, y, 5, 5);
+    ctx.fillStyle = '#E91E63';
+    ctx.fill();
+    ctx.closePath();
+}
 
 function update(x, y) {
     moveBlock(x, y);

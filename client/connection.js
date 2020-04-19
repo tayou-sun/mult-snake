@@ -28,7 +28,6 @@ const connectedPromise = new Promise(resolve => {
   };
 
   export const updateDirection = throttle(20, dir => {
-    debugger
     dir.socketId = socket.id; 
     socket.emit(Constants.MSG_TYPES.INPUT, dir);
   });
