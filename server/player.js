@@ -1,10 +1,9 @@
 class Player {
-    constructor(id, username, x, y,socketId) {
+    constructor(id, username,socketId, snake) {
         this.id = id;
         this.username = username;
-        this.x = x;
-        this.y = y;
         this.socketId = socketId;
+        this.snake = snake;
     }
 }
 

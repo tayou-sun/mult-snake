@@ -1,19 +1,50 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext('2d');
-import {updateDirection} from './connection';
+import { updateDirection } from './connection';
 
 export function processGameUpdate(res) {
     ctx.restore();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     console.log(res)
+    debugger
     res.players.forEach(element => {
-    update(element.x, element.y);
-   });
+        element.snake.points.forEach(point => {
+            var currentX = point.x;
+            var currentY = point.y;
+            for (var i = 0; i < point.size; i++) {
+                update(currentX, currentY);
+                currentX = getNextXPoint(currentX, point.direction);
+                currentY = getNextYPoint(currentY, point.direction);
+            }
+        });
 
-   res.items.forEach(item=>{
-    drawItems(item.x, item.y)
-   })
-  
+    });
+
+    res.items.forEach(item => {
+        drawItems(item.x, item.y)
+    })
+
+}
+
+function getNextXPoint(x,direction) {
+    if (direction == "Right") {
+        return x + 10;
+    }
+    if (direction == "Left") {
+        return x - 10;
+    }
+    return x;
+}
+
+function getNextYPoint(y, direction) {
+    if (direction == "Up") {
+        return y - 10;
+    }
+    if (direction == "Down") {
+        return y + 10;
+    }
+
+    return y;
 }
 
 export function draw() {
@@ -44,27 +75,34 @@ function drawBlock() {
 
 
 document.addEventListener('keydown', event => {
+
+    var direction = "";
+
     if (event.key === 'Right' || event.key === 'ArrowRight') {
         block.dx = block.speed;
         block.dy = 0;
+        direction = "Right";
     } else if (event.key === 'Left' || event.key === 'ArrowLeft') {
         block.dx = -block.speed;
         block.dy = 0;
+        direction = "Left";
     }
 
     if (event.key === 'Up' || event.key === 'ArrowUp') {
         block.dy = -block.speed;
         block.dx = 0;
+        direction = "Up";
 
     } else if (event.key === 'Down' || event.key === 'ArrowDown') {
         block.dy = block.speed;
         block.dx = 0;
+        direction = "Down";
     }
 
     var x = block.x + block.dx;
     var y = block.y + block.dy;
-    
-    updateDirection({x: x, y: y});
+
+    updateDirection({ x: x, y: y, direction: direction });
     //update();
 
 
@@ -86,8 +124,8 @@ document.addEventListener('keyup', event => {
 });
 
 
-function moveBlock(x,y) {
-    block.x  = x;
+function moveBlock(x, y) {
+    block.x = x;
     block.y = y;
 
     if (block.x < 0) {
@@ -108,7 +146,7 @@ function moveBlock(x,y) {
 
 }
 
-function drawItems(x,y){
+function drawItems(x, y) {
     ctx.beginPath();
     ctx.rect(x, y, 5, 5);
     ctx.fillStyle = '#E91E63';
